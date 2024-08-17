@@ -1,0 +1,29 @@
+/* 
+#ffffff
+#69923e
+#4e7837
+#807c7a	
+#2c2b29
+*/
+
+.app {
+  color: #ffffff;
+}
+
+.pointer-onHover:hover {
+  cursor: pointer;
+}
+
+.bg-white {
+  background-color: #ffffff;
+}
+
+.bg-green {
+  background-color: #69923e !important;
+}
+.secondary-text {
+  color: #807c7a !important;
+}
+.bold {
+  font-weight: 600;
+}
