@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import Board from "../Match Page/Board";
 import PlayWhiteSVG from "../play-white.svg";
+import ComputerIcon from "../Re-useables/Icons/ComputerIcon";
 import "../App.css";
 
 import UserContext, { UserContextType } from "../store/UserContext";
@@ -13,8 +14,12 @@ import HoverScaleButton from "../Re-useables/HoverScaleButton";
 import CustomizeBoardPanel from "./Customize Board/CustomizeBoardPanel";
 import { AnimatePresence } from "framer-motion";
 function HomePage() {
-  const { queue, userProfile } = useContext<UserContextType>(UserContext);
+  const { queue, userProfile, setUserStatus } =
+    useContext<UserContextType>(UserContext);
 
+  function playAgainstBot() {
+    setUserStatus("In Match vs. Bot");
+  }
   const boardColRef = useRef<HTMLDivElement>();
   const board2ndColRef = useRef<HTMLDivElement>();
   const [boardSizeProp, setBoardSizeProp] = useState<number>(
@@ -142,7 +147,7 @@ function HomePage() {
               >
                 <h1
                   style={{
-                    fontSize: "2.7rem",
+                    fontSize: "2.6rem",
                     width: "100%",
                     border: "",
                     textAlign: "center",
@@ -151,38 +156,41 @@ function HomePage() {
                 >
                   Play Chess Online!
                 </h1>
-                <div className="d-flex mb-3 text-center">
-                  <h5 className="mx-2" style={{ fontSize: "1.1rem" }}>
-                    1000{" "}
-                    <span className="secondary-text bold">
-                      Games played today
-                    </span>
-                  </h5>
-                  <h5 className="mx-2" style={{ fontSize: "1.1rem" }}>
-                    1000{" "}
-                    <span className="secondary-text bold">Playing Now</span>
-                  </h5>
-                </div>
               </div>
-              <HoverScaleButton
-                onClick={queue}
-                className="px-5 py-2 bg-green d-flex align-items-center text-light"
-                style={{
-                  fontSize: "1.1rem",
-                  border: "none",
-                  height: "fit-content",
-                  borderRadius: "0.5rem",
-                }}
-              >
-                <img
-                  src={PlayWhiteSVG}
-                  alt="Description of image"
-                  width="50"
-                  height="50"
-                  className="me-2"
-                />
-                Play Online
-              </HoverScaleButton>
+              <div className="d-flex flex-md-column">
+                <HoverScaleButton
+                  onClick={queue}
+                  className="m-2 px-5 py-2 bg-green d-flex align-items-center text-light"
+                  style={{
+                    fontSize: "1.1rem",
+                    border: "none",
+                    height: "fit-content",
+                    borderRadius: "0.5rem",
+                  }}
+                >
+                  <img
+                    src={PlayWhiteSVG}
+                    alt="Description of image"
+                    width="50"
+                    height="50"
+                    className="me-2"
+                  />
+                  Play Online
+                </HoverScaleButton>
+                <HoverScaleButton
+                  onClick={queue}
+                  className="m-2 px-5 py-2 bg-secondary d-flex align-items-center text-light"
+                  style={{
+                    fontSize: "1.1rem",
+                    border: "none",
+                    height: "fit-content",
+                    borderRadius: "0.5rem",
+                  }}
+                >
+                  <ComputerIcon />
+                  Vs. Bot
+                </HoverScaleButton>
+              </div>
             </div>
           </Col>
           <Col

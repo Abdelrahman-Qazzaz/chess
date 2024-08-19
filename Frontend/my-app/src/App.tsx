@@ -6,6 +6,7 @@ import QueueScreen from "./QueueScreen";
 import UserContext, { UserContextType } from "./store/UserContext";
 import Notification from "./Notification";
 import { motion, AnimatePresence } from "framer-motion";
+
 function App() {
   const { userStatus, notification } = useContext<UserContextType>(UserContext);
 
@@ -42,6 +43,7 @@ function App() {
             <MatchPage />
           </motion.div>
         )}
+
         {notification.message !== "" && (
           <motion.div
             initial={{ opacity: 0 }}
