@@ -43,6 +43,16 @@ function App() {
             <MatchPage />
           </motion.div>
         )}
+        {userStatus === "In Match vs. Bot" && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            style={{ height: "100%" }}
+          >
+            <MatchPage againstBot={true} />
+          </motion.div>
+        )}
 
         {notification.message !== "" && (
           <motion.div

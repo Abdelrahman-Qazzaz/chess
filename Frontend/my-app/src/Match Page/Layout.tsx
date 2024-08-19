@@ -22,6 +22,7 @@ function Layout({
           user={opponent}
           timeLeft={timeLeft.opponentTimeLeft}
           turn={turn}
+          showTime={opponent.socketID !== null}
         />
         {/* board */}
         {children}
@@ -30,6 +31,7 @@ function Layout({
           user={you}
           timeLeft={timeLeft.youTimeLeft}
           turn={turn}
+          showTime={opponent.socketID !== null}
         />
       </div>
     </div>

@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
 import UserAvatar from "../../UserAvatar";
-import SocketContext from "../../store/SocketContext";
 
 function UserTabHeaderOrFooter(props: {
   user: any;
   timeLeft: number;
   turn: string;
+  showTime: boolean;
 }) {
   const [formattedTime, setFormattedTime] = useState("");
   useEffect(() => {
@@ -32,17 +32,20 @@ function UserTabHeaderOrFooter(props: {
       <div className="flex-grow-1 d-flex align-items-center ms-2">
         {props.user.name}
       </div>
-      <div
-        style={{
-          height: "fit-content",
-          color: "#EEEEEE",
-          backgroundColor: "#1E201E",
-          opacity: props.turn === props.user.color ? "1" : "0.4",
-          padding: "0.1rem 2rem",
-        }}
-      >
-        {formattedTime}
-      </div>
+
+      {props.showTime && (
+        <div
+          style={{
+            height: "fit-content",
+            color: "#EEEEEE",
+            backgroundColor: "#1E201E",
+            opacity: props.turn === props.user.color ? "1" : "0.4",
+            padding: "0.1rem 2rem",
+          }}
+        >
+          {formattedTime}
+        </div>
+      )}
     </div>
   );
 }

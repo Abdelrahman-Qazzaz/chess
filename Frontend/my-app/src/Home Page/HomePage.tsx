@@ -13,11 +13,40 @@ import UserProfileEditScreen from "./UserProfileEditScreen";
 import HoverScaleButton from "../Re-useables/HoverScaleButton";
 import CustomizeBoardPanel from "./Customize Board/CustomizeBoardPanel";
 import { AnimatePresence } from "framer-motion";
+import SocketContext from "../store/SocketContext";
 function HomePage() {
-  const { queue, userProfile, setUserStatus } =
+  const { queue, userProfile, setRoom, setUserStatus, setNotification } =
     useContext<UserContextType>(UserContext);
+  const { socket } = useContext(SocketContext);
 
   function playAgainstBot() {
+    // const white = Math.random() < 0.5;
+    // const room = {
+    //   name: `${userProfile.name} vs Bot`,
+    //   players: [
+    //     {
+    //       name: userProfile.name,
+    //       avatar: userProfile.avatar,
+    //       socketID: socket.id,
+    //       color: white ? "w" : "b",
+    //       timeLeft: {
+    //         value: 300,
+    //       },
+    //     },
+    //     {
+    //       name: "Bot",
+    //       avatar: "Avatar-1.jpeg",
+    //       socketID: null,
+    //       color: white ? "b" : "w",
+    //       timeLeft: {
+    //         value: 300,
+    //       },
+    //     },
+    //   ],
+    // };
+    // setRoom(room);
+    setNotification({ message: "", requestOwnerData: null });
+
     setUserStatus("In Match vs. Bot");
   }
   const boardColRef = useRef<HTMLDivElement>();
@@ -178,7 +207,7 @@ function HomePage() {
                   Play Online
                 </HoverScaleButton>
                 <HoverScaleButton
-                  onClick={queue}
+                  onClick={playAgainstBot} // against bot: true
                   className="m-2 px-5 py-2 bg-secondary d-flex align-items-center text-light"
                   style={{
                     fontSize: "1.1rem",
