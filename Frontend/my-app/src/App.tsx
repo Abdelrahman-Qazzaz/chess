@@ -6,16 +6,10 @@ import QueueScreen from "./QueueScreen";
 import UserContext, { UserContextType } from "./store/UserContext";
 import Notification from "./Notification";
 import { motion, AnimatePresence } from "framer-motion";
+import MatchPageVsBot from "./Match Page/MatchPageVsBot";
 
 function App() {
-  const { userStatus, notification, setNotification, setUserStatus } =
-    useContext<UserContextType>(UserContext);
-
-  function playAgainstBot() {
-    setNotification({ message: "", requestOwnerData: null });
-
-    setUserStatus("In Match vs. Bot");
-  }
+  const { userStatus, notification } = useContext<UserContextType>(UserContext);
 
   return (
     <AnimatePresence>
@@ -28,7 +22,7 @@ function App() {
             style={{ height: "100%" }}
             className="d-flex align-items-center"
           >
-            <HomePage playAgainstBot={playAgainstBot} />
+            <HomePage />
           </motion.div>
         )}
         {userStatus === "In Queue" && (
@@ -50,14 +44,15 @@ function App() {
             <MatchPage />
           </motion.div>
         )}
-        {userStatus === "In Match vs. Bot" && (
+
+        {userStatus === "In Match Against Bot" && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             style={{ height: "100%" }}
           >
-            <MatchPage againstBot={true} />
+            <MatchPageVsBot />
           </motion.div>
         )}
 

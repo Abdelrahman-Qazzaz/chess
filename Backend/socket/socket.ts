@@ -147,6 +147,9 @@ module.exports = {
         serverExports.io.to(room).emit("Found Match", room);
       }
     );
+    socket.on("Exit Queue", () => {
+      removeFromQueue({ socketID: socket.id });
+    });
     socket.on("disconnect", async () => {
       console.log("disconnection");
       // in case user refreshes browser (or just closes the tab or browser all together).

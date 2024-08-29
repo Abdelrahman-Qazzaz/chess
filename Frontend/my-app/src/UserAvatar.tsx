@@ -18,7 +18,6 @@ function UserAvatar(props: any) {
             props.user?.color === props.winner?.color && props.winner
               ? "0.4rem solid #69923e"
               : "none",
-          padding: "0.05rem",
         }}
       >
         <img

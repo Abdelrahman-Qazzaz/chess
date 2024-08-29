@@ -16,7 +16,6 @@ export interface UserContextType {
   notification: { message: string; requestOwnerData: any };
   setNotification: (data: any) => void;
   room: any;
-  setRoom: (data: any) => void;
   queue: () => void;
 
   requestRematch: (data: {
@@ -37,7 +36,6 @@ const UserContext = createContext<UserContextType>({
   notification: { message: "", requestOwnerData: {} },
   setNotification: () => {},
   room: {},
-  setRoom: () => {},
   queue: () => {},
   requestRematch: (data) => {},
   acceptRematch: (data) => {},
@@ -67,7 +65,7 @@ export function UserContextProvider({ children }: { children: ReactNode }) {
   const { socket } = useContext(SocketContext);
 
   useEffect(() => {
-    if (userStatus !== "In Match" && userStatus !== "In Match vs. Bot") {
+    if (userStatus !== "In Match") {
       setRoom(null);
     }
   }, [userStatus]);
@@ -124,7 +122,6 @@ export function UserContextProvider({ children }: { children: ReactNode }) {
         userStatus,
         setUserStatus,
         room,
-        setRoom,
         queue,
         requestRematch,
         notification,

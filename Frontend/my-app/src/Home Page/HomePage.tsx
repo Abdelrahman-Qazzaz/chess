@@ -13,11 +13,12 @@ import UserProfileEditScreen from "./UserProfileEditScreen";
 import HoverScaleButton from "../Re-useables/HoverScaleButton";
 import CustomizeBoardPanel from "./Customize Board/CustomizeBoardPanel";
 import { AnimatePresence } from "framer-motion";
-import SocketContext from "../store/SocketContext";
-function HomePage(props: { playAgainstBot: Function }) {
-  const { queue, userProfile, setRoom, setUserStatus, setNotification } =
+function HomePage() {
+  function playAgainstBot() {
+    setUserStatus("In Match Against Bot");
+  }
+  const { queue, userProfile, setUserStatus } =
     useContext<UserContextType>(UserContext);
-  const { socket } = useContext(SocketContext);
 
   const boardColRef = useRef<HTMLDivElement>();
   const board2ndColRef = useRef<HTMLDivElement>();
@@ -177,7 +178,7 @@ function HomePage(props: { playAgainstBot: Function }) {
                   Play Online
                 </HoverScaleButton>
                 <HoverScaleButton
-                  onClick={props.playAgainstBot} // against bot: true
+                  onClick={playAgainstBot}
                   className="m-2 px-5 py-2 bg-secondary d-flex align-items-center text-light"
                   style={{
                     fontSize: "1.1rem",

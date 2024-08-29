@@ -10,8 +10,8 @@ function Layout({
   opponent,
 }: {
   children: ReactNode;
-  timeLeft: { youTimeLeft: number; opponentTimeLeft: number };
-  turn: string;
+  timeLeft?: { youTimeLeft: number; opponentTimeLeft: number };
+  turn?: string;
   you: any;
   opponent: any;
 }) {
@@ -20,18 +20,16 @@ function Layout({
       <div style={{ width: "fit-content" }}>
         <UserTabHeaderOrFooter
           user={opponent}
-          timeLeft={timeLeft.opponentTimeLeft}
-          turn={turn}
-          showTime={opponent.socketID !== -1}
+          timeLeft={timeLeft?.opponentTimeLeft}
+          turn={turn ?? null}
         />
         {/* board */}
         {children}
         {/* board */}
         <UserTabHeaderOrFooter
           user={you}
-          timeLeft={timeLeft.youTimeLeft}
-          turn={turn}
-          showTime={opponent.socketID !== -1}
+          timeLeft={timeLeft?.youTimeLeft}
+          turn={turn ?? null}
         />
       </div>
     </div>

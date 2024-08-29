@@ -4,9 +4,15 @@ import { motion } from "framer-motion";
 import { FaArrowLeft } from "react-icons/fa";
 import HoverScaleButton from "./Re-useables/HoverScaleButton";
 import UserContext from "./store/UserContext";
+import SocketContext from "./store/SocketContext";
 
 function QueueScreen() {
   const { setUserStatus } = useContext(UserContext);
+  const { socket } = useContext(SocketContext);
+  function exitQueue() {
+    socket.emit("Exit Queue");
+    setUserStatus("Home Page");
+  }
   return (
     <div
       style={{
@@ -32,7 +38,7 @@ function QueueScreen() {
       >
         <div>
           <HoverScaleButton
-            onClick={() => setUserStatus("Home Page")}
+            onClick={exitQueue}
             style={{
               backgroundColor: "transparent",
               border: "none",
