@@ -31,7 +31,7 @@ function UserTabHeaderOrFooter(props: {
       }}
       className="d-flex align-items-center my-2"
     >
-      <UserAvatar src={props.user.avatar} />
+      <UserAvatar forUserTabHeaderOrFooter src={props.user.avatar} />
       <div className="flex-grow-1 d-flex align-items-center ms-2">
         {props.user.name}
       </div>
