@@ -10,6 +10,9 @@ const port = 4000;
 const socketEvents = require("./socket/socket.js");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
+app.get("/", (req, res) => {
+  res.json({});
+});
 exports.io.on("connection", socketEvents.onConnection);
 server.listen(port, () => {
   console.log(`Listening on port ${port}`);
