@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "../App.css";
 import GameOverPanelBackground from "./GameOverPanelBackground";
 import UserAvatar from "../UserAvatar";
@@ -9,6 +9,7 @@ import { motion } from "framer-motion";
 function GameOverPanel(props: any) {
   const { queue, requestRematch, setUserStatus } = useContext(UserContext);
   const [showOptions, setSowOptions] = useState(false);
+
   return (
     <>
       {showOptions ? (
@@ -23,30 +24,45 @@ function GameOverPanel(props: any) {
             style={{ height: "100%", width: "90%" }}
             className=" d-flex flex-column justify-content-center align-items-center"
           >
-            <Button
-              onClick={() =>
-                requestRematch({
-                  opponentData: {
-                    name: props.opponent.name,
-                    avatar: props.opponent.avatar,
-                    socketID: props.opponent.socketID,
-                  },
-                  yourData: {
-                    name: props.you.name,
-                    avatar: props.you.avatar,
-                    socketID: props.you.socketID,
-                  },
-                })
-              }
-              className="bg-green my-2"
-              style={{
-                border: "none",
-                width: "100%",
-                height: "fit-content",
-              }}
-            >
-              Request Rematch
-            </Button>
+            {props.opponent.socketID !== -1 ? (
+              <Button
+                onClick={() =>
+                  requestRematch({
+                    opponentData: {
+                      name: props.opponent.name,
+                      avatar: props.opponent.avatar,
+                      socketID: props.opponent.socketID,
+                    },
+                    yourData: {
+                      name: props.you.name,
+                      avatar: props.you.avatar,
+                      socketID: props.you.socketID,
+                    },
+                  })
+                }
+                className="bg-green my-2"
+                style={{
+                  border: "none",
+                  width: "100%",
+                  height: "fit-content",
+                }}
+              >
+                Request Rematch
+              </Button>
+            ) : (
+              <Button
+                onClick={props.playAgainstBot}
+                className="bg-green my-2"
+                style={{
+                  border: "none",
+                  width: "100%",
+                  height: "fit-content",
+                }}
+              >
+                Rematch
+              </Button>
+            )}
+
             <Button
               onClick={queue}
               className="bg-green my-2"

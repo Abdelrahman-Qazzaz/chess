@@ -31,14 +31,25 @@ function MatchPage(props: { againstBot?: boolean }) {
     setGame(new Chess());
     //i dont think the below is necessary, but just in case:
     if (room) {
-      if (socket.id == room.players[0].socketID) {
-        you = room.players[0];
-        opponent = room.players[1];
+      if (props.againstBot) {
+        const botIndex = room.players.findIndex(
+          (player: any) => player.socketID === -1
+        );
+        opponent = room.players[botIndex];
+        you =
+          room.players[
+            room.players.findIndex((player: any) => player.socketID !== -1)
+          ];
       } else {
-        you = room.players[1];
-        opponent = room.players[0];
+        if (socket.id == room.players[0].socketID) {
+          you = room.players[0];
+          opponent = room.players[1];
+        } else {
+          you = room.players[1];
+          opponent = room.players[0];
+        }
       }
-      if (you!.color !== game.turn() && opponent.socketID === null) {
+      if (you!.color !== game.turn() && opponent.socketID === -1) {
         // if this is the start of the match, and the bot is playing white
         botMakeMove(game);
       }
@@ -62,12 +73,12 @@ function MatchPage(props: { againstBot?: boolean }) {
         // you win
         setWinner({ ...you, method: "By Checkmate" });
 
-        if (opponent.socketID !== null) {
+        if (opponent.socketID !== -1) {
           socket.emit("Make a move", gameCopy.fen());
           socket.emit("Game over", you, opponent, "By Checkmate");
         }
       } else {
-        if (opponent.socketID !== null) {
+        if (opponent.socketID !== -1) {
           socket.emit("Make a move", gameCopy.fen());
         } else {
           botMakeMove(gameCopy);
@@ -105,6 +116,9 @@ function MatchPage(props: { againstBot?: boolean }) {
       copyOfGameCopy.move(botMove);
 
       setGame(copyOfGameCopy);
+      if (copyOfGameCopy.isGameOver()) {
+        setWinner({ ...opponent, method: "By Checkmate" });
+      }
     }, 200);
   }
   function onDrop(sourceSquare: string, targetSquare: string) {
@@ -144,7 +158,7 @@ function MatchPage(props: { againstBot?: boolean }) {
           {
             name: "Bot",
             avatar: ComputerIconSvg,
-            socketID: null,
+            socketID: -1,
             color: white ? "b" : "w",
             timeLeft: {
               value: 300,

@@ -8,7 +8,14 @@ import Notification from "./Notification";
 import { motion, AnimatePresence } from "framer-motion";
 
 function App() {
-  const { userStatus, notification } = useContext<UserContextType>(UserContext);
+  const { userStatus, notification, setNotification, setUserStatus } =
+    useContext<UserContextType>(UserContext);
+
+  function playAgainstBot() {
+    setNotification({ message: "", requestOwnerData: null });
+
+    setUserStatus("In Match vs. Bot");
+  }
 
   return (
     <AnimatePresence>
@@ -21,7 +28,7 @@ function App() {
             style={{ height: "100%" }}
             className="d-flex align-items-center"
           >
-            <HomePage />
+            <HomePage playAgainstBot={playAgainstBot} />
           </motion.div>
         )}
         {userStatus === "In Queue" && (
